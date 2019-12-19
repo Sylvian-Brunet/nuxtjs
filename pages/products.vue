@@ -3,15 +3,18 @@
       <img src="/pictures/others/logo.png" class="logo">
       <div class="produit" v-for="produit in products" :key="produit['_id']" :id="produit['_id']">
         <div class="Pimg">
-          <img :src="produit['picture']" style="border-radius: 5px;">
+          <img :src="produit.picture" style="border-radius: 5px;">
         </div>
         <div class="Pinfo">
-          <div>Article : {{ produit['name'] }}</div>
-          <div>Marque : {{ produit['brand'] }}</div>
-          <div>Quantité : {{ produit['quantity'] }}</div>
-          <div>Note : {{ produit['grade'] }} / 5</div>
+          <div>Article : {{ produit.name }}</div>
+          <div>Marque : {{ produit.brand }}</div>
+          <div>Quantité : {{ produit.quantity }}</div>
+          <div>Note : {{ produit.grade }} / 5</div>
           <div class="liste">
-            Ingrédients : <input class="show" type="button" @click="show(produit['_id'])" value=">">
+            Ingrédients : <button class="show" type="button" v-on:click.stop.prevent="show(produit._id)"> > </button>
+            <ul class="ingre hidden">
+              <li v-for="ingre in produit.ingredients">{{ ingre }}</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -33,7 +36,8 @@
                     "brand": "Lipton compagny",
                     "bar_code": 186161658448,
                     "grade": "1",
-                    "quantity": "50 cl"
+                    "quantity": "50 cl",
+                    "show": false,
                   },
                   {
                       "picture": "/pictures/products/cocaCola.jpg",
@@ -43,7 +47,8 @@
                       "brand": "Coca-cola compagny",
                       "bar_code": 7126421987452,
                       "grade": "1",
-                      "quantity": "50 cl"
+                      "quantity": "50 cl",
+                      "show": false,
                   },
                   {
                       "picture": "/pictures/products/leffe.jpg",
@@ -53,7 +58,8 @@
                       "brand": "Leffe compagny",
                       "bar_code": 785787855785825,
                       "grade": "2",
-                      "quantity": "33 cl"
+                      "quantity": "33 cl",
+                      "show": false,
                   },
                   {
                       "picture": "/pictures/products/orangina.jpg",
@@ -63,7 +69,8 @@
                       "brand": "Orangina compagny",
                       "bar_code": 721824978785857,
                       "grade": "1",
-                      "quantity": "50 cl"
+                      "quantity": "50 cl",
+                      "show": false,
                   },
                   {
                       "picture": "/pictures/products/fanta.jpg",
@@ -73,7 +80,8 @@
                       "brand": "Fanta compagny",
                       "bar_code": 7216712791297,
                       "grade": "2",
-                      "quantity": "50 cl"
+                      "quantity": "50 cl",
+                      "show": false,
                   },
                   {
                       "picture": "/pictures/products/sprite.jpg",
@@ -83,7 +91,8 @@
                       "brand": "Sprite compagny",
                       "bar_code": 121346751545622,
                       "grade": "2",
-                      "quantity": "50 cl"
+                      "quantity": "50 cl",
+                      "show": false,
                   }
                   ,{
                       "picture": "/pictures/products/panache.jpg",
@@ -93,20 +102,31 @@
                       "brand": "Panach'",
                       "bar_code": 1427271174156418,
                       "grade": "3",
-                      "quantity": "25 cl"
+                      "quantity": "25 cl",
+                      "show": false,
                   }
               ],
           }
       },
       methods: {
-          show(id) {
+          test: function() {
+              console.log('test');
+          },
+          show: function(id) {
               let div = document.getElementById(id).getElementsByClassName('liste');
-              let HTML = '<ul>';
-              for(let i = 0; i < this.products[id]['ingredients'].length; i++) {
-                  HTML += `<li>` + this.products[id]['ingredients'][i] + `</li>`
+
+              if (this.products[id]['show'] == false) {
+                  let liste = document.getElementById(id).getElementsByClassName('ingre');
+                  liste[0].className = 'ingre';
+                  document.getElementById(id).getElementsByClassName('show')[0].innerHTML = '<';
+                  this.products[id]['show'] = true;
+              } else {
+                  let liste = document.getElementById(id).getElementsByClassName('ingre');
+                  document.getElementById(id).getElementsByClassName('show')[0].innerHTML = '>';
+                  liste[0].className = 'ingre hidden';
+                  this.products[id]['show'] = false;
               }
-              HTML += '</ul>';
-              div[0].innerHTML += HTML;
+
           },
       }
   }
@@ -128,6 +148,10 @@
 
   body {
     background-color: lightblue;
+  }
+
+  .hidden {
+    display: none;
   }
 
   .show {
