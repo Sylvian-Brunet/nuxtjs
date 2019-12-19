@@ -1,4 +1,4 @@
-# miwPWA
+# nuxtjs
 
 > My incredible Nuxt.js project
 
