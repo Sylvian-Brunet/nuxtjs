@@ -109,9 +109,6 @@
           }
       },
       methods: {
-          test: function() {
-              console.log('test');
-          },
           show: function(id) {
               let div = document.getElementById(id).getElementsByClassName('liste');
 
@@ -201,5 +198,4 @@
       width: 768px;
     }
   }
-
 </style>
