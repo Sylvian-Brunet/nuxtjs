@@ -5,27 +5,21 @@
       <!--<qrcode-drop-zone></qrcode-drop-zone>
       <qrcode-capture></qrcode-capture>-->
     </div>
-
-    <div v-for="(product, i) in products" :key="i" class="products__product">
-      <div class="product__infos">
-        <div class="product__picture">
-          <img :src="product.pictures[0]">
-        </div>
-        <div class="product__name"> {{ product.name }} </div>
-      </div>
-    </div>
+    <product v-for="(product, i) in products" :key="i" class="products__product" :product="product"></product>
   </div>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex';
-  import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+  import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
+  import Product from '~/components/Product'
 
   export default {
       components: {
           QrcodeStream,
           QrcodeDropZone,
-          QrcodeCapture
+          QrcodeCapture,
+          Product
       },
       mounted() {
           this.fetchProducts();
@@ -57,23 +51,10 @@
       height: 300px;
     }
     .products__product {
-      background-color: green;
+      background-color: lightblue;
       width: 300px;
       padding: 10px;
       margin-top: 5px;
       border-radius: 5px;
-    }
-    .product__infos {
-
-    }
-    .product__picture {
-      text-align: center;
-    }
-    .product__picture img {
-      width: 100px;
-      height: 100px;
-    }
-    .product__name {
-      text-align: center;
     }
 </style>
