@@ -23,6 +23,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'vue-qrcode-reader/vue-qrcode-reader.css'
   ],
   /*
   ** Plugins to load before mounting the App
